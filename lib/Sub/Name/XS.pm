@@ -1,11 +1,11 @@
-package Sub::Name;
+package Sub::Name::XS;
 # ABSTRACT: (re)name a sub
 
 =pod
 
 =head1 SYNOPSIS
 
-    use Sub::Name;
+    use Sub::Name::XS;
 
     subname $name, $subref;
 

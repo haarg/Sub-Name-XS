@@ -23,7 +23,7 @@ static MGVTBL subname_vtbl;
 #define Newxz(ptr, num, type)	Newz(0, ptr, num, type)
 #endif
 
-MODULE = Sub::Name  PACKAGE = Sub::Name
+MODULE = Sub::Name::XS  PACKAGE = Sub::Name::XS
 
 PROTOTYPES: DISABLE
 

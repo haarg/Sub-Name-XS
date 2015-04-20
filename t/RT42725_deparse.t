@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 2;
-use Sub::Name;
+use Sub::Name::XS;
 use B::Deparse;
 
 my $source = eval {

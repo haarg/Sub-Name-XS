@@ -4,7 +4,7 @@ use warnings;
 BEGIN { $^P |= 0x210 }
 
 use Test::More 0.88;
-use Sub::Name;
+use Sub::Name::XS;
 
 my $x = subname foo => sub { (caller 0)[3] };
 my $line = __LINE__ - 1;
@@ -15,7 +15,7 @@ is($x->(), "main::foo");
 
 package Blork;
 
-use Sub::Name;
+use Sub::Name::XS;
 
 subname " Bar!", $x;
 ::is($x->(), "Blork:: Bar!");

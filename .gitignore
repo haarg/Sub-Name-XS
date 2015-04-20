@@ -2,7 +2,7 @@
 /.build/
 !/.gitignore
 /.latest
-/Name.*
+/XS.*
 !/Name.xs
 /MYMETA.*
 /Makefile
@@ -10,5 +10,5 @@
 /blib/
 /pm_to_blib
 /_eumm/
-/Sub-Name-*/
-/Sub-Name-*.tar.gz
+/Sub-Name-XS-*/
+/Sub-Name-XS-*.tar.gz
