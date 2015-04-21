@@ -128,3 +128,52 @@ set_subname(name, sub)
 	CvGV_set(cv, gv);
 #endif
 	PUSHs(sub);
+
+void
+get_subname(code)
+    SV *code
+PREINIT:
+    CV *cv;
+    GV *gv;
+PPCODE:
+    if (!SvROK(code) && SvGMAGICAL(code))
+        mg_get(code);
+
+    if(!SvROK(code) || SvTYPE(cv = (CV *)SvRV(code)) != SVt_PVCV)
+        croak("Not a subroutine reference");
+
+    if(!(gv = CvGV(cv)))
+        XSRETURN(0);
+
+    mPUSHs(newSVpvf("%s::%s", HvNAME(GvSTASH(gv)), GvNAME(gv)));
+    XSRETURN(1);
+
+BOOT:
+{
+    HV *lu_stash = gv_stashpvn("List::Util", 10, TRUE);
+    GV *rmcgv = *(GV**)hv_fetch(lu_stash, "REAL_MULTICALL", 14, TRUE);
+    SV *rmcsv;
+#if !defined(SvWEAKREF) || !defined(SvVOK)
+    HV *su_stash = gv_stashpvn("Scalar::Util", 12, TRUE);
+    GV *vargv = *(GV**)hv_fetch(su_stash, "EXPORT_FAIL", 11, TRUE);
+    AV *varav;
+    if(SvTYPE(vargv) != SVt_PVGV)
+        gv_init(vargv, su_stash, "Scalar::Util", 12, TRUE);
+    varav = GvAVn(vargv);
+#endif
+    if(SvTYPE(rmcgv) != SVt_PVGV)
+        gv_init(rmcgv, lu_stash, "List::Util", 10, TRUE);
+    rmcsv = GvSVn(rmcgv);
+#ifndef SvWEAKREF
+    av_push(varav, newSVpv("weaken",6));
+    av_push(varav, newSVpv("isweak",6));
+#endif
+#ifndef SvVOK
+    av_push(varav, newSVpv("isvstring",9));
+#endif
+#ifdef REAL_MULTICALL
+    sv_setsv(rmcsv, &PL_sv_yes);
+#else
+    sv_setsv(rmcsv, &PL_sv_no);
+#endif
+}
