@@ -28,7 +28,7 @@ MODULE = Sub::Name::XS  PACKAGE = Sub::Name::XS
 PROTOTYPES: DISABLE
 
 void
-subname(name, sub)
+set_subname(name, sub)
 	char *name
 	SV *sub
     PREINIT:

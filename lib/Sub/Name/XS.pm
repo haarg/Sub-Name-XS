@@ -55,11 +55,6 @@ use warnings;
 
 our $VERSION = '0.14';
 
-use Exporter 5.57 'import';
-
-our @EXPORT = qw(subname);
-our @EXPORT_OK = @EXPORT;
-
 use XSLoader;
 XSLoader::load(
     __PACKAGE__,

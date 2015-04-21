@@ -6,7 +6,7 @@ use Sub::Name::XS;
 use B::Deparse;
 
 my $source = eval {
-    B::Deparse->new->coderef2text(subname foo => sub{ @_ });
+    B::Deparse->new->coderef2text(Sub::Name::XS::set_subname foo => sub{ @_ });
 };
 
 ok !$@;
